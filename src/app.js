@@ -8,10 +8,10 @@ import './config.js'
 const app = express();
 
 app.use(express.json());
-app.use("/api", pizzasRouter);
-app.use("/api", clientesRouter);
-app.use("/api", empleadosRouter);
-app.use("/api", pedidosRouter);
+app.use('/api', pizzasRouter);
+app.use('/api', clientesRouter);
+app.use('/api', empleadosRouter);
+app.use('/api', pedidosRouter);
 
 
 app.use((req,res,next)=>{
