@@ -66,7 +66,7 @@ export const actualizarCliente = async (req, res) => {
   const { id } = req.params;
   const {nombre, direccion, telefono,correo} = req.body;
   const [result] = await pool.query(
-    "UPDATE clientes SET nombre = IFNULL(?,nombre), direccion = IFNULL(?,direccion),  telefono = IFNULL(?,telefono),  correo = IFNULL(?,correo)",
+    "UPDATE clientes SET nombre = IFNULL(?,nombre), direccion = IFNULL(?,direccion),  telefono = IFNULL(?,telefono),  correo = IFNULL(?,correo) WHERE cliente_id =?",
     [nombre, direccion, telefono,correo, id]
   );
 
