@@ -1,4 +1,3 @@
-Create database pizzeria;
 use pizzeria;
 
 CREATE TABLE pizzas (
