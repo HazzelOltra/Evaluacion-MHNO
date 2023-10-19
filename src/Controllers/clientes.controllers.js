@@ -8,23 +8,38 @@ export const Conexion = async (req, res) => {
 
 // Mostrar todos los clientes
 export const traerClientes = async (req, res) => {
+  try{
   const { nombre, direccion, telefono,correo} = req.body;
   const [data] = await pool.query("SELECT * FROM  clientes", [
     nombre, direccion, telefono,correo
   ]);
   res.json(data);
+} catch (error) {
+  return res
+    .status(500)
+    .json({ message: "Algo anda mal... favor de verificar" });
+}
+  
 };
+
 
 // Mostrar un cliente
 export const traerCliente = async (req, res) => {
+  try{
   const [rows] = await pool.query("SELECT * FROM  clientes where cliente_id=?", [
     req.params.id,
   ]);
   res.json(rows);
+} catch (error) {
+  return res
+    .status(500)
+    .json({ message: "Algo anda mal... favor de verificar" });
+}
 };
 
 // Añadir
 export const agregarCliente = async (req, res) => {
+  try{
   const { nombre, direccion, telefono,correo} = req.body;
   const [data] = await pool.query(
     "INSERT INTO clientes (nombre, direccion, telefono,correo) VALUES (?,?,?,?)",
@@ -38,10 +53,16 @@ export const agregarCliente = async (req, res) => {
     telefono,
     correo
   });
+} catch (error) {
+  return res
+    .status(500)
+    .json({ message: "Algo anda mal... favor de verificar" });
+}
 };
 
 // Actualizar
 export const actualizarCliente = async (req, res) => {
+  try{
   const { id } = req.params;
   const {nombre, direccion, telefono,correo} = req.body;
   const [result] = await pool.query(
@@ -57,10 +78,16 @@ export const actualizarCliente = async (req, res) => {
     id,
   ]);
   res.json(rows[0]);
+} catch (error) {
+  return res
+    .status(500)
+    .json({ message: "Algo anda mal... favor de verificar" });
+}
 };
 
 //Eliminar
 export const eliminarCliente = async (req, res) => {
+  try{
   const [data] = await pool.query("DELETE FROM clientes WHERE cliente_id=?", [
     req.params.id,
   ]);
@@ -69,4 +96,10 @@ export const eliminarCliente = async (req, res) => {
       message: "Cliente no encontrado",
     });
   res.sendStatus(204);
+} catch (error) {
+  return res
+    .status(500)
+    .json({ message: "Algo anda mal... favor de verificar" });
+}
+  
 };

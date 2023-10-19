@@ -8,9 +8,15 @@ export const Conexion = async (req, res) => {
 
 // Mostrar todos los empleados
 export const traerEmpleados = async (req, res) => {
+  try{
   const { nombre, apellido, fecha_nacimiento, direccion, telefono, puesto, salario, fecha_contratación} = req.body;
   const [data] = await pool.query("SELECT * FROM  empleados", [nombre, apellido, fecha_nacimiento, direccion, telefono, puesto, salario, fecha_contratación]);
   res.json(data);
+} catch (error) {
+  return res
+    .status(500)
+    .json({ message: "Algo anda mal... favor de verificar" });
+}
 };
 
 // Mostrar un empleado
@@ -23,6 +29,7 @@ export const traerEmpleado = async (req, res) => {
 
 // Añadir 
 export const agregarEmpleado = async (req, res) => {
+  try{
   const {nombre, apellido, fecha_nacimiento, direccion, telefono, puesto, salario, fecha_contratación} = req.body;
   const [data] = await pool.query(
     "INSERT INTO empleados (nombre, apellido, fecha_nacimiento, direccion, telefono, puesto, salario, fecha_contratación) VALUES (?,?,?,?,?,?,?,?)",
@@ -32,10 +39,16 @@ export const agregarEmpleado = async (req, res) => {
   res.send({
     id: data.insertId,
     nombre, apellido, fecha_nacimiento, direccion, telefono, puesto, salario, fecha_contratación});
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Algo anda mal... favor de verificar" });
+  }
 };
 
 // Actualizar 
 export const actualizarEmpleado = async (req, res) => {
+  try{
   const { id } = req.params;
   const {nombre, apellido, fecha_nacimiento, direccion, telefono, puesto, salario, fecha_contratación} = req.body;
   const [result] = await pool.query(
@@ -52,10 +65,16 @@ export const actualizarEmpleado = async (req, res) => {
     id,
   ]);
   res.json(rows[0]);
+} catch (error) {
+  return res
+    .status(500)
+    .json({ message: "Algo anda mal... favor de verificar" });
+}
 };
 
 //Eliminar 
 export const eliminarEmpleado = async (req, res) => {
+  try{
   const [data] = await pool.query("DELETE FROM empleados WHERE empleado_id=?", [
     req.params.id,
   ]);
@@ -64,4 +83,9 @@ export const eliminarEmpleado = async (req, res) => {
       message: "Empleado no encontrado",
     });
   res.sendStatus(204);
+} catch (error) {
+  return res
+    .status(500)
+    .json({ message: "Algo anda mal... favor de verificar" });
+}
 };
