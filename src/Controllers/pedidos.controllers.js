@@ -44,7 +44,7 @@ export const eliminarPedido = async (req, res) => {
 export const obtenerPedido = async (req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM Pedidos where pedido_id=?",
+      "SELECT * FROM pedidos where pedido_id=?",
       [req.params.id]
     );
     res.json(rows);
