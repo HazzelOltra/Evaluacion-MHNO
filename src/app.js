@@ -3,10 +3,10 @@ import clientesRouter from "./Routes/clientes.routes.js";
 import pizzasRouter from "./Routes/pizzas.routes.js";
 import pedidosRouter from "./Routes/pedidos.routes.js";
 import empleadosRouter from "./Routes/empleados.routes.js";
-
+import cors from "cors"
 import "./config.js";
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use("/api", pizzasRouter);
 app.use("/api", clientesRouter);
